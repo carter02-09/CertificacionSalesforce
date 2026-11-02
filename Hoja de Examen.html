@@ -1,0 +1,883 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Hoja de Examen</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400..700&display=swap">
+<style>
+:root{
+  /* Layout: one centered column; screens swap in place (cargar, ajustes, quiz, resultado).
+     Answers are rows of a grid. A picked row is drawn as Excel's active cell; the correct one fills green like the source file. */
+  --bg:#EDF0F7; --surface:#FFFFFF; --surface-2:#F4F6FB;
+  --ink:#131A33; --ink-2:#4B5575;
+  --line:#DCE1EF; --line-strong:#B4BCD6;
+  --accent:#2D46E8; --accent-ink:#FFFFFF; --accent-soft:#E4E8FF;
+  --good:#0B7F4D; --good-ink:#FFFFFF; --good-soft:#DDF3E8; --good-text:#0A6841;
+  --bad-line:#D1456F; --bad-bg:#FCE4EC; --bad-text:#A31F52;
+  --font-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --font-body:"Instrument Sans","Segoe UI",system-ui,-apple-system,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1222; --surface:#151B30; --surface-2:#1B2240;
+    --ink:#E7EBFA; --ink-2:#A2ACCB;
+    --line:#272F4D; --line-strong:#3A4570;
+    --accent:#8FA2FF; --accent-ink:#0B1030; --accent-soft:#222C5C;
+    --good:#25A86F; --good-ink:#03150C; --good-soft:#12352A; --good-text:#6EE0AE;
+    --bad-line:#E0567F; --bad-bg:#3A1628; --bad-text:#FF9DBA;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1222; --surface:#151B30; --surface-2:#1B2240;
+  --ink:#E7EBFA; --ink-2:#A2ACCB;
+  --line:#272F4D; --line-strong:#3A4570;
+  --accent:#8FA2FF; --accent-ink:#0B1030; --accent-soft:#222C5C;
+  --good:#25A86F; --good-ink:#03150C; --good-soft:#12352A; --good-text:#6EE0AE;
+  --bad-line:#E0567F; --bad-bg:#3A1628; --bad-text:#FF9DBA;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--font-body)}
+.app{
+  max-width:46rem;margin:0 auto;
+  padding-block:20px 64px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+h1,h2,legend,p{margin:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* top bar */
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;margin-bottom:28px}
+.brand{display:flex;align-items:center;gap:10px;font:700 1.05rem/1 var(--font-display);letter-spacing:-.01em}
+.brand svg{width:22px;height:22px;display:block}
+.lg{fill:none;stroke:currentColor;stroke-width:1.6}
+.lg.on{fill:var(--good);stroke:var(--good)}
+
+/* type */
+h1{font:700 clamp(2.1rem,6.6vw,3.2rem)/1.02 var(--font-display);letter-spacing:-.025em;text-wrap:balance}
+.lead{font-size:1.1rem;color:var(--ink-2);max-width:54ch;margin:16px 0 28px;text-wrap:pretty}
+.h-sm{font:600 1.05rem/1.2 var(--font-display);letter-spacing:-.005em;margin-bottom:6px;padding:0}
+.hint{color:var(--ink-2);font-size:.95rem;max-width:56ch;text-wrap:pretty}
+.mono{font-family:var(--font-mono)}
+.kicker{font:500 .78rem/1.3 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+
+/* buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  min-height:46px;padding:0 20px;border-radius:5px;border:1.5px solid transparent;
+  font-weight:600;font-size:1rem;cursor:pointer;
+  transition:background-color .15s,border-color .15s,transform .1s;
+}
+.btn svg{width:18px;height:18px;flex:none}
+.btn:active:not(:disabled){transform:translateY(1px)}
+.btn-primary{background:var(--accent);color:var(--accent-ink)}
+.btn-primary:hover:not(:disabled){filter:brightness(1.08)}
+.btn-primary:disabled{background:var(--line);color:var(--ink-2);cursor:not-allowed}
+.btn-secondary{background:var(--surface);border-color:var(--line-strong);color:var(--ink)}
+.btn-secondary:hover:not(:disabled){border-color:var(--accent)}
+.btn-secondary:disabled{opacity:.45;cursor:not-allowed}
+.btn-lg{min-height:52px;padding:0 28px;font-size:1.05rem}
+.btn-link{background:none;border:0;padding:6px 2px;color:var(--accent);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1.5px}
+.btn-quiet{background:none;border:0;padding:8px 4px;color:var(--ink-2);font-weight:500;font-size:.92rem;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+
+.view{animation:rise .24s ease-out}
+@keyframes rise{from{transform:translateY(6px)}to{transform:none}}
+
+/* upload */
+.drop{
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:16px;
+  padding:20px;border:2px dashed var(--line-strong);border-radius:6px;background:var(--surface);
+  transition:border-color .15s,background-color .15s;
+}
+.drop.is-over{border-color:var(--accent);background:var(--accent-soft)}
+.drop-icon{width:46px;height:46px;border-radius:4px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}
+.drop-icon svg{width:24px;height:24px}
+.drop-title{font:600 1.1rem/1.25 var(--font-display)}
+.drop-sub{color:var(--ink-2);font-size:.92rem;margin-top:2px}
+.err{margin-top:12px;padding:12px 14px;border-radius:5px;background:var(--bad-bg);color:var(--bad-text);border:1px solid var(--bad-line);font-size:.95rem}
+.sample-row{margin-top:14px}
+.format{margin-top:44px}
+.grid-wrap{margin-top:12px;border:1px solid var(--line-strong);border-radius:4px;background:var(--surface);min-width:0}
+.mini{width:100%;table-layout:fixed;border-collapse:collapse;font:400 .78rem/1.3 var(--font-mono)}
+.mini th,.mini td{border:1px solid var(--line);padding:7px 9px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:400}
+.mini th{width:7.6rem;background:var(--surface-2);color:var(--ink-2)}
+.mini td.ok{background:var(--good);color:var(--good-ink);border-color:var(--good)}
+.mini tr:first-child th,.mini tr:first-child td{border-top:0}
+.mini tr>*:first-child{border-left:0}
+.mini tr>*:last-child{border-right:0}
+.mini tr:last-child>*{border-bottom:0}
+.note{margin-top:12px;color:var(--ink-2);font-size:.92rem;max-width:62ch;text-wrap:pretty}
+
+/* setup */
+.chip-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-bottom:14px}
+.chip{display:inline-flex;max-width:100%;padding:4px 10px;border:1px solid var(--line-strong);border-radius:3px;background:var(--surface);font:500 .8rem/1.4 var(--font-mono);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.meta-line{margin-top:12px;font:500 .9rem var(--font-mono);color:var(--ink-2)}
+.warn{margin-top:20px;padding:14px 16px;border:1px solid var(--line-strong);border-left:4px solid var(--bad-line);border-radius:4px;background:var(--surface)}
+.warn .h-sm{margin-bottom:8px}
+.warn ul{margin:0;padding-left:18px;font-size:.92rem;color:var(--ink-2);display:grid;gap:4px}
+.block{margin-top:32px;padding:0;border:0;min-width:0}
+.shuffle-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin-top:14px}
+.pill{display:inline-flex;align-items:center;padding:4px 10px;border-radius:3px;border:1px solid var(--line-strong);background:var(--surface);font:500 .8rem var(--font-mono)}
+.pill.is-on{background:var(--accent-soft);border-color:var(--accent);color:var(--ink)}
+.status-line{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.peek{margin-top:14px;padding:12px 14px;border-radius:4px;background:var(--surface-2);border:1px solid var(--line);font-size:.92rem;color:var(--ink-2);max-width:62ch}
+.peek span{display:block;font:500 .72rem var(--font-mono);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.choices{display:grid;gap:12px;margin-top:32px}
+.choices legend{float:left;width:100%;margin-bottom:12px}
+.choices legend+*{clear:both}
+.choice{position:relative;display:grid;grid-template-columns:22px minmax(0,1fr);gap:14px;padding:16px;border:1px solid var(--line-strong);border-radius:4px;background:var(--surface);cursor:pointer;transition:background-color .15s}
+.choice:hover{background:var(--surface-2)}
+.choice input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.choice .mark{margin-top:2px}
+.choice strong{display:block;font:600 1.05rem/1.25 var(--font-display)}
+.choice small{display:block;color:var(--ink-2);font-size:.92rem;margin-top:3px}
+.choice.is-picked{background:var(--accent-soft);z-index:1}
+.choice.is-picked::after,.cell.is-picked::after{content:"";position:absolute;inset:-1px;border:2px solid var(--accent);pointer-events:none}
+.choice.is-picked::before,.cell.is-picked::before{content:"";position:absolute;right:-5px;bottom:-5px;width:9px;height:9px;background:var(--accent);border:2px solid var(--surface);z-index:2;pointer-events:none}
+.choice:has(input:focus-visible),.cell:has(input:focus-visible){outline:3px solid var(--accent);outline-offset:3px}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px;margin-top:36px}
+
+/* radio mark + answer cells */
+.mark{width:22px;height:22px;border:2px solid var(--line-strong);border-radius:50%;display:grid;place-items:center;background:var(--surface);flex:none}
+.mark svg{width:14px;height:14px}
+.is-picked .mark{border-color:var(--accent)}
+.is-picked .mark::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.sheet{margin:0;padding:0;min-width:0;border:1px solid var(--line-strong);border-radius:4px;background:var(--surface)}
+.cell{
+  position:relative;display:grid;grid-template-columns:22px minmax(0,1fr);gap:14px;align-items:start;
+  padding:15px 16px;cursor:pointer;color:var(--ink);transition:background-color .15s;
+}
+.cell+.cell{border-top:1px solid var(--line)}
+.cell:first-of-type{border-radius:3px 3px 0 0}
+.cell:last-of-type{border-radius:0 0 3px 3px}
+.cell input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.cell .mark{margin-top:1px}
+.cell-main{min-width:0}
+.cell-text{display:block;white-space:pre-line;overflow-wrap:break-word;line-height:1.5}
+.sheet:not(.is-locked) .cell:not(.is-picked):not(.is-static):hover{background:var(--surface-2)}
+.sheet.is-locked .cell,.cell.is-static{cursor:default}
+.cell.is-picked{background:var(--accent-soft);z-index:1}
+.cell.is-correct{background:var(--good);color:var(--good-ink);z-index:0}
+.cell.is-correct::before,.cell.is-correct::after{display:none}
+.cell.is-correct .mark{background:var(--good-ink);border-color:var(--good-ink);color:var(--good)}
+.cell.is-correct .mark::after,.cell.is-wrong .mark::after{display:none}
+.cell.is-wrong{background:var(--bad-bg)}
+.cell.is-wrong::after{border-color:var(--bad-line)}
+.cell.is-wrong::before{background:var(--bad-line)}
+.cell.is-wrong .mark{background:var(--bad-line);border-color:var(--bad-line);color:#fff}
+.tag{display:inline-block;margin-top:8px;font:500 .72rem/1.2 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.is-correct .tag{color:var(--good-ink)}
+.is-wrong .tag{color:var(--bad-text)}
+
+/* quiz */
+.progress{margin-bottom:24px}
+.progress-top{display:flex;justify-content:space-between;gap:12px;font:500 .8rem var(--font-mono);color:var(--ink-2);letter-spacing:.02em}
+.track{height:4px;background:var(--line);border-radius:2px;margin:8px 0 14px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--accent);transition:width .25s}
+.squares{display:flex;flex-wrap:wrap;gap:6px}
+.sq{width:20px;height:20px;padding:0;display:block;border:1.5px solid var(--line-strong);border-radius:3px;background:var(--surface)}
+button.sq{cursor:pointer}
+.sq.is-done{background:var(--accent-soft);border-color:var(--accent)}
+.sq.is-good{background:var(--good);border-color:var(--good)}
+.sq.is-bad{background:var(--bad-line);border-color:var(--bad-line)}
+.sq.is-nokey{background:var(--surface-2);border-style:dashed}
+.sq.is-now{outline:2px solid var(--accent);outline-offset:2px}
+.q{font:600 clamp(1.15rem,3.6vw,1.4rem)/1.32 var(--font-display);letter-spacing:-.005em;margin-bottom:20px;white-space:pre-line;text-wrap:pretty;max-width:62ch}
+.q:focus{outline:none}
+.fb{display:flex;gap:10px;align-items:flex-start;margin-top:16px;padding:12px 14px;border-radius:4px;border:1px solid var(--line-strong);background:var(--surface);font-size:.95rem}
+.fb svg{width:18px;height:18px;flex:none;margin-top:2px}
+.fb.is-good{background:var(--good-soft);border-color:var(--good);color:var(--good-text)}
+.fb.is-bad{background:var(--bad-bg);border-color:var(--bad-line);color:var(--bad-text)}
+.quiz-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:24px}
+.quiz-actions .btn:only-child{margin-left:auto}
+
+/* results */
+.score{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 14px;margin-top:16px}
+.score b{font:800 clamp(4.2rem,17vw,6.8rem)/.9 var(--font-display);letter-spacing:-.045em}
+.score span{font:500 1.4rem var(--font-mono);color:var(--ink-2)}
+.pct{margin-top:10px;font:500 .95rem var(--font-mono);color:var(--ink-2)}
+.stats{display:flex;flex-wrap:wrap;gap:8px 20px;margin:18px 0 0;padding:0;list-style:none;font-size:.95rem}
+.stats li{display:flex;align-items:center;gap:8px}
+.dot{width:12px;height:12px;border-radius:2px;border:1.5px solid var(--line-strong);background:var(--surface)}
+.dot.g{background:var(--good);border-color:var(--good)}
+.dot.b{background:var(--bad-line);border-color:var(--bad-line)}
+.review{margin-top:44px}
+.review-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 18px;margin-bottom:14px}
+.toggle{display:inline-flex;align-items:center;gap:9px;font-size:.92rem;color:var(--ink-2);cursor:pointer}
+.toggle input{width:18px;height:18px;accent-color:var(--accent);margin:0}
+.rev{border:1px solid var(--line-strong);border-radius:4px;background:var(--surface)}
+.rev+.rev{margin-top:10px}
+.rev summary{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:12px;align-items:center;padding:13px 14px;cursor:pointer;list-style:none}
+.rev summary::-webkit-details-marker{display:none}
+.rev summary::after{content:"";width:8px;height:8px;border-right:2px solid var(--ink-2);border-bottom:2px solid var(--ink-2);transform:rotate(45deg);margin-right:4px;transition:transform .15s}
+.rev[open] summary::after{transform:rotate(-135deg)}
+.rev-q{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-weight:500;line-height:1.4;overflow-wrap:anywhere}
+.rev[open] .rev-q{display:block;-webkit-line-clamp:unset}
+.badge{width:24px;height:24px;border-radius:3px;display:grid;place-items:center;border:1.5px solid var(--line-strong);color:var(--ink-2)}
+.badge svg{width:14px;height:14px}
+.badge.is-good{background:var(--good);border-color:var(--good);color:var(--good-ink)}
+.badge.is-bad{background:var(--bad-line);border-color:var(--bad-line);color:#fff}
+.rev-body{padding:4px 14px 16px}
+.rev-body .sheet{margin-top:8px}
+.empty{padding:18px;border:1px dashed var(--line-strong);border-radius:4px;color:var(--ink-2)}
+
+@media (max-width:34rem){
+  .drop{grid-template-columns:auto minmax(0,1fr)}
+  .drop .btn{grid-column:1/-1}
+  .actions .btn-lg{width:100%}
+  .mini th{width:5.6rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+</style>
+
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <svg viewBox="0 0 22 22" aria-hidden="true"><rect class="lg" x="1" y="1" width="9" height="9" rx="1.5"/><rect class="lg" x="12" y="1" width="9" height="9" rx="1.5"/><rect class="lg" x="1" y="12" width="9" height="9" rx="1.5"/><rect class="lg on" x="12" y="12" width="9" height="9" rx="1.5"/></svg>
+      <span>Hoja de examen</span>
+    </div>
+    <button id="btnExit" class="btn-quiet" type="button" hidden>Salir del quiz</button>
+  </header>
+
+  <main>
+    <!-- 1. Cargar -->
+    <section id="v-upload" class="view" aria-labelledby="h-upload">
+      <h1 id="h-upload" tabindex="-1">Sube tu Excel y practica.</h1>
+      <p class="lead">Cada columna es una pregunta y la respuesta correcta va pintada de verde. La página revuelve preguntas y respuestas, y tú decides cuándo ver tus errores.</p>
+
+      <div id="drop" class="drop">
+        <div class="drop-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>
+        </div>
+        <div>
+          <p class="drop-title" id="dropTitle">Arrastra tu archivo aquí</p>
+          <p class="drop-sub">Formato .xlsx. El archivo se lee en tu navegador y no se sube a ningún servidor.</p>
+        </div>
+        <button id="btnPick" class="btn btn-primary" type="button">Elegir archivo</button>
+        <input id="file" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden>
+      </div>
+      <p id="upErr" class="err" role="alert" hidden></p>
+      <p class="sample-row"><button id="btnSample" class="btn-link" type="button">Probar con 2 preguntas de ejemplo</button></p>
+
+      <div class="format">
+        <h2 class="h-sm">Cómo debe verse tu hoja</h2>
+        <div class="grid-wrap">
+          <table class="mini" aria-label="Ejemplo del formato del Excel">
+            <tr><th scope="row">Preguntas</th><td>¿Qué acción conviene usar?</td><td>¿Qué muestra datos reales?</td></tr>
+            <tr><th scope="row"></th><td>A</td><td>A</td></tr>
+            <tr><th scope="row">Respuesta 1</th><td>Texto de la primera opción</td><td>Flow</td></tr>
+            <tr><th scope="row"></th><td class="ok">B</td><td>B</td></tr>
+            <tr><th scope="row">Respuesta 2</th><td>Texto de la segunda opción</td><td>Picklists</td></tr>
+            <tr><th scope="row"></th><td>C</td><td class="ok">C</td></tr>
+            <tr><th scope="row">Respuesta 3</th><td>Texto de la tercera opción</td><td>Merge Fields</td></tr>
+          </table>
+        </div>
+        <p class="note">La pregunta va en la fila 1 de su columna. Cada respuesta va debajo, con su letra encima. La celda verde puede ser la de la letra o la del texto. En el quiz las letras no se muestran.</p>
+      </div>
+    </section>
+
+    <!-- 2. Ajustes -->
+    <section id="v-setup" class="view" aria-labelledby="h-setup" hidden>
+      <div class="chip-row" id="fileChips"></div>
+      <h1 id="h-setup" tabindex="-1">Todo listo para empezar.</h1>
+      <p class="meta-line" id="setupMeta"></p>
+      <div id="warnBox" class="warn" hidden></div>
+
+      <section class="block" aria-labelledby="h-order">
+        <h2 class="h-sm" id="h-order">Orden</h2>
+        <p class="hint">Revolver cambia de lugar todas las preguntas y las respuestas de cada una. Cada vez que lo pulsas, ninguna queda donde estaba.</p>
+        <div class="shuffle-row">
+          <button id="btnShuffle" class="btn btn-secondary" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3h5v5"/><path d="M4 20L21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/></svg>
+            Revolver
+          </button>
+          <div id="shuffleStatus" class="status-line" aria-live="polite"></div>
+        </div>
+        <div id="peek" class="peek"></div>
+      </section>
+
+      <fieldset class="block choices" id="modeChoices">
+        <legend class="h-sm">Corrección</legend>
+        <label class="choice is-picked">
+          <input type="radio" name="mode" value="instant" id="mode-instant" checked>
+          <span class="mark" aria-hidden="true"></span>
+          <span><strong>Al responder</strong><small>Cada respuesta se marca como correcta o incorrecta en el momento.</small></span>
+        </label>
+        <label class="choice">
+          <input type="radio" name="mode" value="end" id="mode-end">
+          <span class="mark" aria-hidden="true"></span>
+          <span><strong>Al final</strong><small>No ves nada hasta terminar. Puedes volver atrás y cambiar respuestas.</small></span>
+        </label>
+      </fieldset>
+
+      <div class="actions">
+        <button id="btnStart" class="btn btn-primary btn-lg" type="button">Empezar quiz</button>
+        <button id="btnOther" class="btn-link" type="button">Cargar otro archivo</button>
+      </div>
+    </section>
+
+    <!-- 3. Quiz -->
+    <section id="v-quiz" class="view" aria-label="Quiz" hidden>
+      <div class="progress">
+        <div class="progress-top"><span id="pCount"></span><span id="pScore"></span></div>
+        <div class="track" aria-hidden="true"><div id="trackFill" class="fill"></div></div>
+        <div id="squares" class="squares"></div>
+      </div>
+      <div id="quizBody"></div>
+    </section>
+
+    <!-- 4. Resultado -->
+    <section id="v-results" class="view" aria-labelledby="h-results" hidden></section>
+  </main>
+  <div id="live" class="sr-only" aria-live="polite"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+<script>
+(function(){
+'use strict';
+
+/*LOGIC-START*/
+const INDEXED={3:'00FF00',11:'00FF00',17:'008000',50:'99CC00',57:'339966'};
+
+function shuffleInPlace(a){
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=a[i];a[i]=a[j];a[j]=t;}
+  return a;
+}
+/* New order in which no element keeps the position it had in `order`. */
+function derange(order){
+  const n=order.length;
+  if(n<2) return order.slice();
+  for(let t=0;t<400;t++){
+    const out=shuffleInPlace(order.slice());
+    if(out.every((v,i)=>v!==order[i])) return out;
+  }
+  const k=1+Math.floor(Math.random()*(n-1));
+  return order.map((_,i)=>order[(i+k)%n]);
+}
+
+function rgbToHsl(r,g,b){
+  r/=255;g/=255;b/=255;
+  const max=Math.max(r,g,b),min=Math.min(r,g,b),d=max-min,l=(max+min)/2;
+  let h=0,s=0;
+  if(d>0){
+    s=d/(1-Math.abs(2*l-1));
+    if(max===r) h=((g-b)/d)%6; else if(max===g) h=(b-r)/d+2; else h=(r-g)/d+4;
+    h*=60; if(h<0) h+=360;
+  }
+  return [h,s,l];
+}
+function hslToHex(h,s,l){
+  const c=(1-Math.abs(2*l-1))*s,x=c*(1-Math.abs((h/60)%2-1)),m=l-c/2;
+  let r=0,g=0,b=0;
+  if(h<60){r=c;g=x;} else if(h<120){r=x;g=c;} else if(h<180){g=c;b=x;}
+  else if(h<240){g=x;b=c;} else if(h<300){r=x;b=c;} else {r=c;b=x;}
+  return [r+m,g+m,b+m].map(v=>Math.round(v*255).toString(16).padStart(2,'0')).join('');
+}
+function hexToRgb(hex){return [0,2,4].map(i=>parseInt(hex.slice(i,i+2),16));}
+function isGreenHex(hex){
+  const [r,g,b]=hexToRgb(hex);
+  const [h,s,l]=rgbToHsl(r,g,b);
+  return h>=70&&h<=170&&s>=0.25&&l>0.12&&l<0.95;
+}
+function applyTint(hex,tint){
+  if(!tint) return hex;
+  const [r,g,b]=hexToRgb(hex);
+  const [h,s,l]=rgbToHsl(r,g,b);
+  const nl=tint<0?l*(1+tint):l*(1-tint)+tint;
+  return hslToHex(h,s,Math.max(0,Math.min(1,nl)));
+}
+/* Theme palette indexed the way spreadsheet files reference it (0 lt1, 1 dk1, 2 lt2, 3 dk2, 4-9 accents). */
+function themePalette(xml){
+  if(!xml||typeof xml!=='string') return null;
+  const names=['dk1','lt1','dk2','lt2','accent1','accent2','accent3','accent4','accent5','accent6','hlink','folHlink'];
+  const p=names.map(n=>{
+    const m=xml.match(new RegExp('<a:'+n+'>\\s*<a:(?:srgbClr val|sysClr[^>]*?lastClr)="([0-9A-Fa-f]{6})"'));
+    return m?m[1]:null;
+  });
+  return [p[1],p[0],p[3],p[2],p[4],p[5],p[6],p[7],p[8],p[9],p[10],p[11]];
+}
+function colorHex(c,pal){
+  if(!c) return null;
+  if(c.argb) return String(c.argb).slice(-6);
+  if(c.rgb) return String(c.rgb).slice(-6);
+  if(c.indexed!=null&&INDEXED[c.indexed]) return INDEXED[c.indexed];
+  if(c.theme!=null&&pal&&pal[c.theme]) return applyTint(pal[c.theme],c.tint||0);
+  return null;
+}
+function fillColors(fill){
+  if(!fill) return [];
+  if(fill.type==='pattern'){
+    if(!fill.pattern||fill.pattern==='none') return [];
+    return [fill.fgColor,fill.pattern==='solid'?null:fill.bgColor].filter(Boolean);
+  }
+  if(fill.type==='gradient') return (fill.stops||[]).map(s=>s.color).filter(Boolean);
+  return [];
+}
+function isGreenFill(fill,pal){
+  return fillColors(fill).some(c=>{const hex=colorHex(c,pal);return hex?isGreenHex(hex):false;});
+}
+
+function cellText(cell){
+  if(!cell) return '';
+  let v=cell.value;
+  if(v==null) return '';
+  if(v instanceof Date) v=v.toISOString().slice(0,10);
+  else if(typeof v==='object'){
+    if(v.richText) v=v.richText.map(r=>r.text).join('');
+    else if('result' in v) v=(v.result&&typeof v.result==='object'&&v.result.error)?'':v.result;
+    else if(v.error) v='';
+    else if(v.text!==undefined) v=(v.text&&v.text.richText)?v.text.richText.map(r=>r.text).join(''):v.text;
+    else v='';
+  }
+  if(v==null) return '';
+  return String(v).replace(/\r/g,'').replace(/[ \t ]+/g,' ').replace(/ ?\n ?/g,'\n').trim();
+}
+
+function parseWorksheet(ws,pal){
+  const warnings=[],questions=[];
+  const dim=ws.dimensions||{};
+  const maxRow=Math.min(5000,Math.max(ws.rowCount||0,dim.bottom||0));
+  const maxCol=Math.min(500,Math.max(ws.columnCount||0,dim.right||0));
+  if(!maxRow||!maxCol) return {questions,warnings};
+  const cell=(r,c)=>ws.getCell(r,c);
+  const txt=(r,c)=>cellText(cell(r,c));
+
+  let startCol=1;
+  for(let r=1;r<=maxRow;r++){
+    if(/^(preguntas?|respuestas?|questions?|answers?)\b/i.test(txt(r,1))){startCol=2;break;}
+  }
+  let qRow=0;
+  for(let r=1;r<=maxRow&&!qRow;r++){
+    for(let c=startCol;c<=maxCol;c++){if(txt(r,c)){qRow=r;break;}}
+  }
+  if(!qRow) return {questions,warnings};
+
+  const isMarker=t=>/^[A-Za-z][.)]?$/.test(t);
+  for(let c=startCol;c<=maxCol;c++){
+    const qText=txt(qRow,c);
+    if(!qText) continue;
+    const cells=[];
+    for(let r=qRow+1;r<=maxRow;r++){const t=txt(r,c);if(t) cells.push({r,t});}
+    const markers=cells.filter(x=>isMarker(x.t)).length;
+    const options=[];
+    if(markers>=2){
+      for(let i=0;i<cells.length;i++){
+        if(!isMarker(cells[i].t)) continue;
+        const nxt=cells[i+1];
+        if(!nxt||isMarker(nxt.t)) continue;
+        options.push({text:nxt.t,correct:isGreenFill(cell(cells[i].r,c).fill,pal)||isGreenFill(cell(nxt.r,c).fill,pal)});
+        i++;
+      }
+    }else{
+      for(const x of cells) options.push({text:x.t,correct:isGreenFill(cell(x.r,c).fill,pal)});
+    }
+    if(options.length<2){warnings.push({kind:'skipped',text:qText});continue;}
+    const correct=[];
+    options.forEach((o,i)=>{if(o.correct) correct.push(i);});
+    if(!correct.length) warnings.push({kind:'nokey',text:qText});
+    else if(correct.length>1) warnings.push({kind:'multi',text:qText});
+    questions.push({text:qText,options:options.map(o=>({text:o.text})),correct});
+  }
+  return {questions,warnings};
+}
+
+function parseWorkbook(wb){
+  let xml='';
+  const t=wb._themes;
+  if(t){
+    let v=t.theme1||Object.values(t)[0];
+    if(v&&typeof v!=='string'){try{v=new TextDecoder().decode(v);}catch(e){v='';}}
+    xml=v||'';
+  }
+  const pal=themePalette(xml);
+  for(const ws of wb.worksheets){
+    const res=parseWorksheet(ws,pal);
+    if(res.questions.length) return {questions:res.questions,warnings:res.warnings,sheetName:ws.name};
+  }
+  return {questions:[],warnings:[],sheetName:''};
+}
+/*LOGIC-END*/
+
+/* ---------- UI ---------- */
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const trunc=(s,n)=>{s=String(s).replace(/\s+/g,' ');return s.length>n?s.slice(0,n-1).trimEnd()+'…':s;};
+const ICON_CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const ICON_X='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+const ICON_DASH='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M6 12h12"/></svg>';
+
+const SAMPLE=[
+  {
+    text:"A Platform Administrator is creating a new action instruction for an agent. This action, named createCase, is designed to generate a new Salesforce Case record based on the user's conversation with the agent. Which set of Action Instructions should the administrator use for the createCase action, according to best practices for action instructions?",
+    options:[
+      "This action provides the ability to create a new case record in the Salesforce system. Its function is to simply save customer information as a record. Use this when the user wants to create a case.",
+      "Use this action to create a new Salesforce Case record. The goal is to document a customer's issue in the system. Use this when the user's intent is to create a formal record of their problem or question.",
+      "Creates a new case record in the system for any type of customer inquiry. The purpose of this is to ensure a record of the interaction is saved.",
+      "The createCase code snippet is configured to create a case. It runs in the background to handle the user's request to log a new issue. Its purpose is to solve the customer's issue."
+    ],
+    correct:[1]
+  },
+  {
+    text:"A Platform Administrator needs to create a new prompt template to automatically summarize customer cases for a sales team. The administrator wants to dynamically populate the response with data from the case record. What should the administrator use to display real Salesforce data in an agent response from a prompt template?",
+    options:["Flow","Picklists","Agent Instructions","Merge Fields"],
+    correct:[3]
+  }
+].map(q=>({text:q.text,options:q.options.map(t=>({text:t})),correct:q.correct}));
+
+const S={name:'',sheet:'',sample:false,questions:[],qOrder:[],shuffles:0,mode:'instant',warnings:[],run:null};
+let exitTimer=null;
+
+function adopt(parsed){
+  S.questions=parsed.questions.map((q,i)=>({
+    id:i,text:q.text,options:q.options,
+    correct:new Set(q.correct),
+    order:q.options.map((_,k)=>k)
+  }));
+  S.qOrder=S.questions.map((_,i)=>i);
+  S.shuffles=0;
+  S.warnings=parsed.warnings||[];
+  S.run=null;
+}
+function doShuffle(){
+  S.qOrder=derange(S.qOrder);
+  S.questions.forEach(q=>{q.order=derange(q.order);});
+  S.shuffles++;
+}
+function resetOrder(){
+  S.qOrder=S.questions.map((_,i)=>i);
+  S.questions.forEach(q=>{q.order=q.options.map((_,k)=>k);});
+  S.shuffles=0;
+}
+
+function show(name){
+  ['upload','setup','quiz','results'].forEach(v=>{$('v-'+v).hidden=(v!==name);});
+  $('btnExit').hidden=(name!=='quiz');
+  resetExit();
+  window.scrollTo(0,0);
+  const h={upload:'h-upload',setup:'h-setup',results:'h-results'}[name];
+  if(h&&$(h)) $(h).focus({preventScroll:true});
+}
+function announce(msg){
+  const el=$('live');el.textContent='';
+  setTimeout(()=>{el.textContent=msg;},30);
+}
+function resetExit(){
+  if(exitTimer){clearTimeout(exitTimer);exitTimer=null;}
+  $('btnExit').textContent='Salir del quiz';
+}
+
+/* ----- upload ----- */
+function showErr(msg){const e=$('upErr');e.textContent=msg;e.hidden=false;}
+function hideErr(){$('upErr').hidden=true;}
+function setBusy(b){
+  $('dropTitle').textContent=b?'Leyendo tu archivo…':'Arrastra tu archivo aquí';
+  $('btnPick').disabled=b;
+}
+async function handleFile(file){
+  hideErr();
+  if(!file) return;
+  if(!/\.xlsx$/i.test(file.name)){
+    showErr('Ese archivo no es un .xlsx. En Excel usa Archivo, Guardar como, Libro de Excel (.xlsx).');
+    return;
+  }
+  if(typeof ExcelJS==='undefined'){
+    showErr('No se pudo cargar el lector de Excel. Revisa tu conexión y recarga la página.');
+    return;
+  }
+  setBusy(true);
+  try{
+    const buf=await file.arrayBuffer();
+    const wb=new ExcelJS.Workbook();
+    await wb.xlsx.load(buf);
+    const res=parseWorkbook(wb);
+    if(!res.questions.length) throw new Error('empty');
+    S.name=file.name;S.sheet=res.sheetName;S.sample=false;
+    adopt(res);
+    goSetup();
+  }catch(e){
+    showErr(e&&e.message==='empty'
+      ?'No encontré preguntas. Cada pregunta debe estar en la fila 1 de su columna, con las respuestas debajo.'
+      :'No pude leer el archivo. Comprueba que sea un .xlsx válido y que no tenga contraseña.');
+  }finally{
+    setBusy(false);
+    $('file').value='';
+  }
+}
+
+/* ----- setup ----- */
+function goSetup(){
+  renderSetup();
+  show('setup');
+}
+function renderSetup(){
+  const qs=S.questions;
+  $('fileChips').innerHTML=S.sample
+    ?'<span class="chip">Ejemplo incluido</span>'
+    :`<span class="chip" title="${esc(S.name)}">${esc(S.name)}</span>`+(S.sheet?`<span class="chip">hoja ${esc(S.sheet)}</span>`:'');
+  const counts=qs.map(q=>q.options.length);
+  const mn=Math.min(...counts),mx=Math.max(...counts);
+  $('setupMeta').textContent=`${qs.length} ${qs.length===1?'pregunta':'preguntas'} · `+(mn===mx?`${mn} respuestas cada una`:`de ${mn} a ${mx} respuestas`);
+  renderWarnings();
+  renderShuffleStatus();
+}
+function renderWarnings(){
+  const box=$('warnBox'),w=S.warnings;
+  if(!w.length){box.hidden=true;box.innerHTML='';return;}
+  const msg=x=>{
+    const t=`«${esc(trunc(x.text,70))}»`;
+    if(x.kind==='skipped') return `Se omitió ${t}: tiene menos de 2 respuestas.`;
+    if(x.kind==='nokey') return `${t} no tiene respuesta verde y no cuenta en el puntaje.`;
+    return `${t} tiene varias respuestas verdes: cualquiera de ellas cuenta como correcta.`;
+  };
+  const items=w.slice(0,6).map(x=>`<li>${msg(x)}</li>`).join('');
+  const more=w.length>6?`<li>y ${w.length-6} más.</li>`:'';
+  box.innerHTML=`<h2 class="h-sm">Revisa ${w.length===1?'este aviso':'estos avisos'}</h2><ul>${items}${more}</ul>`;
+  box.hidden=false;
+}
+function renderShuffleStatus(){
+  const st=$('shuffleStatus');
+  st.innerHTML=S.shuffles===0
+    ?'<span class="pill">Orden original</span>'
+    :`<span class="pill is-on">Revuelto ${S.shuffles} ${S.shuffles===1?'vez':'veces'}</span><button id="btnRestore" class="btn-quiet" type="button">Volver al orden original</button>`;
+  const first=S.questions[S.qOrder[0]];
+  $('peek').innerHTML=`<span>Primera pregunta ahora</span>${esc(trunc(first.text,130))}`;
+}
+
+/* ----- run ----- */
+function startRun(){
+  S.run={order:S.qOrder.slice(),idx:0,answers:new Map()};
+  show('quiz');
+  renderQuiz();
+  const qh=$('qh');if(qh) qh.focus({preventScroll:true});
+}
+function qStatus(q,chosen){
+  if(chosen===undefined) return 'none';
+  if(!q.correct.size) return 'nokey';
+  return q.correct.has(chosen)?'good':'bad';
+}
+function cellHTML(q,oid,o){
+  const picked=o.chosen===oid;
+  let cls='cell',tag='',mark='';
+  if(picked) cls+=' is-picked';
+  if(o.reveal&&q.correct.size){
+    if(q.correct.has(oid)){cls+=' is-correct';tag=picked?'Tu respuesta · correcta':'Correcta';mark=ICON_CHECK;}
+    else if(picked){cls+=' is-wrong';tag='Tu respuesta';mark=ICON_X;}
+  }else if(o.reveal&&picked){tag='Tu respuesta';}
+  const inner=`<span class="mark" aria-hidden="true">${mark}</span><span class="cell-main"><span class="cell-text">${esc(q.options[oid].text)}</span>${tag?`<span class="tag">${tag}</span>`:''}</span>`;
+  if(o.input){
+    return `<label class="${cls}"><input type="radio" name="ans" value="${oid}"${picked?' checked':''}${o.locked?' disabled':''}>${inner}</label>`;
+  }
+  return `<div class="${cls} is-static">${inner}</div>`;
+}
+function renderQuiz(){
+  const run=S.run,total=run.order.length;
+  const q=S.questions[run.order[run.idx]];
+  const chosen=run.answers.get(q.id);
+  const instant=S.mode==='instant';
+  const reveal=instant&&chosen!==undefined;
+  const locked=reveal;
+
+  let good=0,bad=0;
+  run.order.forEach(i=>{const s=qStatus(S.questions[i],run.answers.get(i));if(s==='good')good++;else if(s==='bad')bad++;});
+  $('pCount').textContent=`Pregunta ${run.idx+1} de ${total}`;
+  $('pScore').textContent=instant?`${good} ${good===1?'acierto':'aciertos'} · ${bad} ${bad===1?'fallo':'fallos'}`:`${run.answers.size} de ${total} respondidas`;
+  $('trackFill').style.width=(run.answers.size/total*100)+'%';
+
+  $('squares').innerHTML=run.order.map((qid,i)=>{
+    const st=qStatus(S.questions[qid],run.answers.get(qid));
+    let cls='sq';
+    if(instant){if(st==='good')cls+=' is-good';else if(st==='bad')cls+=' is-bad';else if(st==='nokey')cls+=' is-nokey';}
+    else if(st!=='none') cls+=' is-done';
+    if(i===run.idx) cls+=' is-now';
+    if(instant) return `<span class="${cls}" aria-hidden="true"></span>`;
+    return `<button type="button" class="${cls}" data-go="${i}" aria-label="Ir a la pregunta ${i+1}, ${st==='none'?'sin responder':'respondida'}"${i===run.idx?' aria-current="step"':''}></button>`;
+  }).join('');
+
+  const opts=q.order.map(oid=>cellHTML(q,oid,{chosen,reveal,input:true,locked})).join('');
+  let banner='';
+  if(reveal){
+    if(!q.correct.size) banner='<div class="fb"><span>Esta pregunta no tiene respuesta verde en tu archivo, así que no cuenta en el puntaje.</span></div>';
+    else if(q.correct.has(chosen)) banner=`<div class="fb is-good">${ICON_CHECK}<span><strong>Correcto.</strong></span></div>`;
+    else banner=`<div class="fb is-bad">${ICON_X}<span><strong>Incorrecto.</strong> ${q.correct.size>1?'Las respuestas correctas están':'La respuesta correcta está'} en verde.</span></div>`;
+  }
+  const last=run.idx===total-1;
+  const unanswered=total-run.answers.size;
+  let nextLabel;
+  if(instant) nextLabel=last?'Ver resultado':'Siguiente';
+  else nextLabel=last?(unanswered>0?`Terminar · faltan ${unanswered}`:'Terminar'):'Siguiente';
+  const nextDisabled=instant&&chosen===undefined;
+  const showPrev=!instant&&run.idx>0;
+
+  $('quizBody').innerHTML=`
+    <h2 id="qh" class="q" tabindex="-1">${esc(q.text)}</h2>
+    <fieldset class="sheet${locked?' is-locked':''}"><legend class="sr-only">Elige una respuesta</legend>${opts}</fieldset>
+    ${banner}
+    <div class="quiz-actions">
+      ${showPrev?'<button type="button" class="btn btn-secondary" id="btnPrev">Anterior</button>':''}
+      <button type="button" class="btn btn-primary" id="btnNext"${nextDisabled?' disabled':''}>${esc(nextLabel)}</button>
+    </div>`;
+}
+function pick(oid){
+  const run=S.run,q=S.questions[run.order[run.idx]];
+  const instant=S.mode==='instant';
+  if(instant&&run.answers.has(q.id)) return;
+  run.answers.set(q.id,oid);
+  renderQuiz();
+  if(instant){
+    const msg=!q.correct.size?'Sin respuesta verde en el archivo.':q.correct.has(oid)?'Correcto.':'Incorrecto.';
+    announce(msg);
+    const nb=$('btnNext');if(nb) nb.focus();
+  }else{
+    const c=document.querySelector('#quizBody input[type=radio]:checked');
+    if(c) c.focus({preventScroll:true});
+  }
+}
+function goTo(i){
+  S.run.idx=i;
+  renderQuiz();
+  const qh=$('qh');if(qh) qh.focus({preventScroll:true});
+  window.scrollTo(0,0);
+}
+function next(){
+  const run=S.run;
+  if(run.idx<run.order.length-1) goTo(run.idx+1);
+  else finish();
+}
+
+/* ----- results ----- */
+function finish(){
+  show('results');
+  renderResults();
+}
+function computeResult(){
+  const run=S.run;
+  let good=0,bad=0,skip=0,nokey=0;
+  run.order.forEach(i=>{
+    const q=S.questions[i],c=run.answers.get(i);
+    if(!q.correct.size){nokey++;return;}
+    if(c===undefined) skip++;
+    else if(q.correct.has(c)) good++;
+    else bad++;
+  });
+  return {good,bad,skip,nokey,scored:good+bad+skip};
+}
+function renderResults(){
+  const r=computeResult();
+  const pct=r.scored?Math.round(r.good/r.scored*100):0;
+  const stats=[
+    `<li><span class="dot g"></span>${r.good} ${r.good===1?'acierto':'aciertos'}</li>`,
+    `<li><span class="dot b"></span>${r.bad} ${r.bad===1?'fallo':'fallos'}</li>`,
+    r.skip?`<li><span class="dot"></span>${r.skip} sin responder</li>`:'',
+    r.nokey?`<li><span class="dot"></span>${r.nokey} sin respuesta verde (no cuenta)</li>`:''
+  ].join('');
+  $('v-results').innerHTML=`
+    <p class="kicker">Resultado</p>
+    <h1 id="h-results" tabindex="-1" class="sr-only">Resultado del quiz</h1>
+    <div class="score"><b>${r.good}</b><span>/ ${r.scored}</span></div>
+    <p class="pct">${pct} % de aciertos</p>
+    <ul class="stats">${stats}</ul>
+    <div class="actions">
+      <button type="button" class="btn btn-primary btn-lg" id="btnRedoShuffle">Revolver y repetir</button>
+      <button type="button" class="btn btn-secondary btn-lg" id="btnRedoSame">Repetir en el mismo orden</button>
+    </div>
+    <div class="actions" style="margin-top:14px">
+      <button type="button" class="btn-link" id="btnBackSetup">Cambiar ajustes</button>
+      <button type="button" class="btn-link" id="btnNewFile">Cargar otro Excel</button>
+    </div>
+    <section class="review" aria-labelledby="h-review">
+      <div class="review-head">
+        <h2 class="h-sm" id="h-review" style="margin:0">Revisión</h2>
+        <label class="toggle" for="onlyBad"><input type="checkbox" id="onlyBad">Mostrar solo las falladas o en blanco</label>
+      </div>
+      <div id="revList"></div>
+    </section>`;
+  renderReview();
+}
+function renderReview(){
+  const run=S.run,only=$('onlyBad')&&$('onlyBad').checked;
+  const rows=[];
+  run.order.forEach(i=>{
+    const q=S.questions[i],c=run.answers.get(i);
+    const st=qStatus(q,c);
+    const isGood=st==='good';
+    if(only&&(isGood||st==='nokey')) return;
+    const badge=isGood?['is-good',ICON_CHECK,'Correcta']:st==='bad'?['is-bad',ICON_X,'Incorrecta']:['',ICON_DASH,st==='nokey'?'Sin respuesta verde':'Sin responder'];
+    const opts=q.order.map(oid=>cellHTML(q,oid,{chosen:c,reveal:true,input:false})).join('');
+    const note=c===undefined&&q.correct.size?'<p class="hint" style="margin-top:8px">No respondiste esta pregunta.</p>':'';
+    rows.push(`<details class="rev"${isGood||st==='nokey'?'':' open'}>
+      <summary><span class="badge ${badge[0]}">${badge[1]}</span><span class="sr-only">${badge[2]}. </span><span class="rev-q">${esc(q.text)}</span></summary>
+      <div class="rev-body"><div class="sheet">${opts}</div>${note}</div>
+    </details>`);
+  });
+  $('revList').innerHTML=rows.length?rows.join(''):'<p class="empty">No hay preguntas falladas. Todo lo que respondiste está bien.</p>';
+}
+
+/* ----- events ----- */
+$('btnPick').addEventListener('click',()=>$('file').click());
+$('file').addEventListener('change',e=>handleFile(e.target.files&&e.target.files[0]));
+const drop=$('drop');
+['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('is-over');}));
+['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('is-over');}));
+drop.addEventListener('drop',e=>{const f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];handleFile(f);});
+window.addEventListener('dragover',e=>e.preventDefault());
+window.addEventListener('drop',e=>e.preventDefault());
+
+$('btnSample').addEventListener('click',()=>{
+  hideErr();
+  S.name='';S.sheet='';S.sample=true;
+  adopt({questions:SAMPLE,warnings:[]});
+  goSetup();
+});
+
+$('btnShuffle').addEventListener('click',()=>{doShuffle();renderShuffleStatus();});
+$('v-setup').addEventListener('click',e=>{
+  if(e.target.closest('#btnRestore')){resetOrder();renderShuffleStatus();$('btnShuffle').focus();}
+});
+$('modeChoices').addEventListener('change',e=>{
+  if(e.target.name!=='mode') return;
+  document.querySelectorAll('#modeChoices .choice').forEach(l=>l.classList.toggle('is-picked',l.querySelector('input').checked));
+});
+$('btnStart').addEventListener('click',()=>{
+  S.mode=document.querySelector('input[name=mode]:checked').value;
+  startRun();
+});
+$('btnOther').addEventListener('click',()=>{hideErr();show('upload');});
+
+$('quizBody').addEventListener('change',e=>{
+  if(e.target.name==='ans') pick(parseInt(e.target.value,10));
+});
+$('quizBody').addEventListener('click',e=>{
+  if(e.target.closest('#btnNext')) next();
+  else if(e.target.closest('#btnPrev')) goTo(S.run.idx-1);
+});
+$('squares').addEventListener('click',e=>{
+  const b=e.target.closest('[data-go]');
+  if(b) goTo(parseInt(b.dataset.go,10));
+});
+$('btnExit').addEventListener('click',()=>{
+  if(exitTimer){resetExit();renderSetup();show('setup');return;}
+  $('btnExit').textContent='¿Salir? Pulsa otra vez';
+  exitTimer=setTimeout(resetExit,3500);
+});
+
+$('v-results').addEventListener('click',e=>{
+  if(e.target.closest('#btnRedoShuffle')){doShuffle();startRun();}
+  else if(e.target.closest('#btnRedoSame')){startRun();}
+  else if(e.target.closest('#btnBackSetup')){renderSetup();show('setup');}
+  else if(e.target.closest('#btnNewFile')){hideErr();show('upload');}
+});
+$('v-results').addEventListener('change',e=>{
+  if(e.target.id==='onlyBad') renderReview();
+});
+})();
+</script>
+
+</body></html>
