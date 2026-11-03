@@ -1,39 +1,40 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Hoja de Examen</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400..700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500..800;1,9..144,500..800&family=IBM+Plex+Mono:wght@400;500&family=Nunito:wght@400..800&display=swap">
 <style>
 :root{
-  /* Layout: one centered column; screens swap in place (cargar, ajustes, quiz, resultado).
-     Answers are rows of a grid. A picked row is drawn as Excel's active cell; the correct one fills green like the source file. */
-  --bg:#EDF0F7; --surface:#FFFFFF; --surface-2:#F4F6FB;
-  --ink:#131A33; --ink-2:#4B5575;
-  --line:#DCE1EF; --line-strong:#B4BCD6;
-  --accent:#2D46E8; --accent-ink:#FFFFFF; --accent-soft:#E4E8FF;
-  --good:#0B7F4D; --good-ink:#FFFFFF; --good-soft:#DDF3E8; --good-text:#0A6841;
-  --bad-line:#D1456F; --bad-bg:#FCE4EC; --bad-text:#A31F52;
-  --font-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
-  --font-body:"Instrument Sans","Segoe UI",system-ui,-apple-system,sans-serif;
-  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  /* Layout: one centered column on a blush background with soft glows; screens swap in place (cargar, ajustes, quiz, resultado).
+     Answers are rounded cards. The picked one gets a rose ring; the correct one fills green like the source file. */
+  --bg:#FFF3F8; --surface:#FFFFFF; --surface-2:#FFF8FB; --glow-a:#FFD6E8; --glow-b:#E8DEFF; --shadow:rgba(214,54,138,.38);
+  --ink:#3A1630; --ink-2:#7E5A72;
+  --line:#F8DCE9; --line-strong:#EDB6CF;
+  --accent:#D6368A; --accent-2:#F472B6; --accent-ink:#FFFFFF; --accent-soft:#FFE1EF;
+  --good:#0F8A5F; --good-ink:#FFFFFF; --good-soft:#DDF6EA; --good-text:#0A6B49;
+  --bad-line:#D9482B; --bad-bg:#FFE6DF; --bad-text:#A8321B;
+  --font-display:"Fraunces",Georgia,"Times New Roman",serif;
+  --font-body:"Nunito","Segoe UI",system-ui,-apple-system,sans-serif;
+  --font-mono:"Nunito","Segoe UI",system-ui,sans-serif;
+  --font-grid:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --bg:#0D1222; --surface:#151B30; --surface-2:#1B2240;
-    --ink:#E7EBFA; --ink-2:#A2ACCB;
-    --line:#272F4D; --line-strong:#3A4570;
-    --accent:#8FA2FF; --accent-ink:#0B1030; --accent-soft:#222C5C;
-    --good:#25A86F; --good-ink:#03150C; --good-soft:#12352A; --good-text:#6EE0AE;
-    --bad-line:#E0567F; --bad-bg:#3A1628; --bad-text:#FF9DBA;
+    --bg:#1E0F23; --surface:#2A1731; --surface-2:#341C3D; --glow-a:#4A1B49; --glow-b:#2A1F5C; --shadow:rgba(0,0,0,.55);
+    --ink:#FFE9F4; --ink-2:#CFA6C0;
+    --line:#46264F; --line-strong:#6B3E7C;
+    --accent:#FF86C4; --accent-2:#C79BFF; --accent-ink:#3A0A27; --accent-soft:#4D2152;
+    --good:#3DD598; --good-ink:#04261A; --good-soft:#143B2D; --good-text:#7DF0BE;
+    --bad-line:#FF7A5C; --bad-bg:#472220; --bad-text:#FFB4A3;
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#0D1222; --surface:#151B30; --surface-2:#1B2240;
-  --ink:#E7EBFA; --ink-2:#A2ACCB;
-  --line:#272F4D; --line-strong:#3A4570;
-  --accent:#8FA2FF; --accent-ink:#0B1030; --accent-soft:#222C5C;
-  --good:#25A86F; --good-ink:#03150C; --good-soft:#12352A; --good-text:#6EE0AE;
-  --bad-line:#E0567F; --bad-bg:#3A1628; --bad-text:#FF9DBA;
+  --bg:#1E0F23; --surface:#2A1731; --surface-2:#341C3D; --glow-a:#4A1B49; --glow-b:#2A1F5C; --shadow:rgba(0,0,0,.55);
+  --ink:#FFE9F4; --ink-2:#CFA6C0;
+  --line:#46264F; --line-strong:#6B3E7C;
+  --accent:#FF86C4; --accent-2:#C79BFF; --accent-ink:#3A0A27; --accent-soft:#4D2152;
+  --good:#3DD598; --good-ink:#04261A; --good-soft:#143B2D; --good-text:#7DF0BE;
+  --bad-line:#FF7A5C; --bad-bg:#472220; --bad-text:#FFB4A3;
   color-scheme:dark;
 }
 
@@ -235,12 +236,92 @@ button.sq{cursor:pointer}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition:none!important;animation:none!important}
 }
+
+/* ===== capa girly ===== */
+::selection{background:var(--accent-soft);color:var(--ink)}
+body{
+  background-color:var(--bg);
+  background-image:radial-gradient(60rem 30rem at 105% -6%,var(--glow-a),transparent 62%),radial-gradient(46rem 28rem at -12% 42%,var(--glow-b),transparent 60%);
+  background-attachment:fixed;
+}
+h1{font-weight:650}
+h1 em{font-style:italic;font-weight:600;color:var(--accent)}
+#h-upload::after,#h-setup::after{
+  content:"";display:inline-block;width:.42em;height:.42em;margin-left:.22em;vertical-align:.5em;
+  background:var(--accent-2);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z'/%3E%3C/svg%3E") center/contain no-repeat;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+.brand{font-weight:650}
+.kicker,.src,.pill,.chip{font-family:var(--font-body)}
+.score b,.score span,.pct,.meta-line,.progress-top,.tag{font-variant-numeric:tabular-nums}
+
+.btn{border-radius:999px;font-weight:700}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 10px 22px -12px var(--shadow)}
+.btn-primary:disabled{box-shadow:none}
+.btn-secondary{border-color:var(--line-strong);background:var(--surface)}
+.btn-link{font-weight:700}
+
+.drop{border-radius:28px;border-width:2px;box-shadow:0 18px 40px -28px var(--shadow)}
+.drop-icon{border-radius:50%}
+.grid-wrap{border-radius:18px;overflow:hidden}
+.mini{font-family:var(--font-grid)}
+.err{border-radius:16px}
+.chip,.pill{border-radius:999px}
+.warn{border-radius:18px;border-left-width:1px;border-top:4px solid var(--bad-line)}
+.peek{border-radius:16px}
+.peek span{font-family:var(--font-body);font-weight:700}
+
+.files{margin-top:32px}
+.file-list{list-style:none;margin:12px 0;padding:0;display:grid;gap:10px}
+.file{display:flex;align-items:center;gap:10px;padding:10px 12px 10px 14px;border:1.5px solid var(--line-strong);border-radius:18px;background:var(--surface)}
+.file.is-off{opacity:.62}
+.file-main{position:relative;display:flex;align-items:center;gap:12px;flex:1;min-width:0;cursor:pointer}
+.file-main input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.box{width:24px;height:24px;flex:none;display:grid;place-items:center;border:2px solid var(--line-strong);border-radius:8px;background:var(--surface);color:transparent}
+.box svg{width:14px;height:14px}
+.file-main input:checked+.box{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.file-main:has(input:focus-visible) .box{outline:3px solid var(--accent);outline-offset:2px}
+.file-text{display:grid;min-width:0}
+.file-name{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file-sub{font-size:.85rem;color:var(--ink-2)}
+.src{margin:0 0 8px;font:700 .78rem/1.3 var(--font-body);letter-spacing:.05em;text-transform:uppercase;color:var(--ink-2);overflow-wrap:anywhere}
+.rev-body .src{margin-top:4px}
+
+.choice{border-radius:20px;border-width:1.5px}
+.choice.is-picked::before,.choice.is-picked::after{display:none}
+.choice.is-picked{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+.choice strong{font-weight:650}
+
+.sheet{border:0;background:none;display:grid;gap:10px;padding:0}
+.cell{border:1.5px solid var(--line-strong);border-radius:18px;background:var(--surface);padding:14px 16px}
+.cell+.cell{border-top:1.5px solid var(--line-strong)}
+.cell:first-of-type,.cell:last-of-type{border-radius:18px}
+.cell.is-picked::before,.cell.is-picked::after,.cell.is-wrong::before,.cell.is-wrong::after{display:none}
+.cell.is-picked{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+.cell.is-correct{border-color:var(--good);box-shadow:none}
+.cell.is-correct.is-picked{box-shadow:0 0 0 2px var(--good)}
+.cell.is-wrong{border-color:var(--bad-line);box-shadow:0 0 0 2px var(--bad-line)}
+.cell.is-wrong .mark{color:var(--bad-bg)}
+.badge.is-bad{color:var(--bad-bg)}
+
+.track{height:8px;border-radius:999px}
+.fill{border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+.sq,.dot{border-radius:50%}
+.sq.is-now{outline-offset:2px}
+.fb{border-radius:16px}
+.q{font-weight:650}
+.rev{border-radius:20px}
+.badge{border-radius:50%}
+.empty{border-radius:18px}
+.score b{font-weight:700}
+@media (max-width:34rem){.file{padding-right:8px}}
 </style>
 
 <div class="app">
   <header class="top">
     <div class="brand">
-      <svg viewBox="0 0 22 22" aria-hidden="true"><rect class="lg" x="1" y="1" width="9" height="9" rx="1.5"/><rect class="lg" x="12" y="1" width="9" height="9" rx="1.5"/><rect class="lg" x="1" y="12" width="9" height="9" rx="1.5"/><rect class="lg on" x="12" y="12" width="9" height="9" rx="1.5"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="var(--accent)" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
       <span>Hoja de examen</span>
     </div>
     <button id="btnExit" class="btn-quiet" type="button" hidden>Salir del quiz</button>
@@ -249,19 +330,19 @@ button.sq{cursor:pointer}
   <main>
     <!-- 1. Cargar -->
     <section id="v-upload" class="view" aria-labelledby="h-upload">
-      <h1 id="h-upload" tabindex="-1">Sube tu Excel y practica.</h1>
-      <p class="lead">Cada columna es una pregunta y la respuesta correcta va pintada de verde. La página revuelve preguntas y respuestas, y tú decides cuándo ver tus errores.</p>
+      <h1 id="h-upload" tabindex="-1">Sube tus Excel y <em>practica</em>.</h1>
+      <p class="lead">Puedes subir varios archivos a la vez y mezclarlos en un solo quiz. Cada columna es una pregunta y la respuesta correcta va pintada de verde. Tú decides cuándo ver tus errores.</p>
 
       <div id="drop" class="drop">
         <div class="drop-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>
         </div>
         <div>
-          <p class="drop-title" id="dropTitle">Arrastra tu archivo aquí</p>
-          <p class="drop-sub">Formato .xlsx. El archivo se lee en tu navegador y no se sube a ningún servidor.</p>
+          <p class="drop-title" id="dropTitle">Arrastra tus archivos aquí</p>
+          <p class="drop-sub">Formato .xlsx, uno o varios. Se leen en tu navegador y no se suben a ningún servidor.</p>
         </div>
-        <button id="btnPick" class="btn btn-primary" type="button">Elegir archivo</button>
-        <input id="file" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden>
+        <button id="btnPick" class="btn btn-primary" type="button">Elegir archivos</button>
+        <input id="file" type="file" multiple accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden>
       </div>
       <p id="upErr" class="err" role="alert" hidden></p>
       <p class="sample-row"><button id="btnSample" class="btn-link" type="button">Probar con 2 preguntas de ejemplo</button></p>
@@ -285,10 +366,17 @@ button.sq{cursor:pointer}
 
     <!-- 2. Ajustes -->
     <section id="v-setup" class="view" aria-labelledby="h-setup" hidden>
-      <div class="chip-row" id="fileChips"></div>
       <h1 id="h-setup" tabindex="-1">Todo listo para empezar.</h1>
       <p class="meta-line" id="setupMeta"></p>
       <div id="warnBox" class="warn" hidden></div>
+
+      <section class="files" aria-labelledby="h-files">
+        <h2 class="h-sm" id="h-files">Tus archivos</h2>
+        <p class="hint">Marca los que quieres incluir. Sus preguntas se mezclan en un solo quiz.</p>
+        <ul id="fileList" class="file-list"></ul>
+        <p id="setupErr" class="err" role="alert" hidden></p>
+        <button id="btnAdd" class="btn btn-secondary" type="button">+ Agregar más archivos</button>
+      </section>
 
       <section class="block" aria-labelledby="h-order">
         <h2 class="h-sm" id="h-order">Orden</h2>
@@ -319,7 +407,7 @@ button.sq{cursor:pointer}
 
       <div class="actions">
         <button id="btnStart" class="btn btn-primary btn-lg" type="button">Empezar quiz</button>
-        <button id="btnOther" class="btn-link" type="button">Cargar otro archivo</button>
+        <button id="btnOther" class="btn-link" type="button">Empezar de nuevo</button>
       </div>
     </section>
 
@@ -532,20 +620,19 @@ const SAMPLE=[
   }
 ].map(q=>({text:q.text,options:q.options.map(t=>({text:t})),correct:q.correct}));
 
-const S={name:'',sheet:'',sample:false,questions:[],qOrder:[],shuffles:0,mode:'instant',warnings:[],run:null};
-let exitTimer=null;
-
-function adopt(parsed){
-  S.questions=parsed.questions.map((q,i)=>({
-    id:i,text:q.text,options:q.options,
-    correct:new Set(q.correct),
-    order:q.options.map((_,k)=>k)
-  }));
-  S.qOrder=S.questions.map((_,i)=>i);
-  S.shuffles=0;
-  S.warnings=parsed.warnings||[];
-  S.run=null;
+const S={files:[],questions:[],qOrder:[],shuffles:0,mode:'instant',warnings:[],run:null};
+let exitTimer=null,fileSeq=0;
+const incl=()=>S.files.filter(f=>f.include);
+function rebuild(){
+  const qs=[],warns=[];
+  incl().forEach(f=>{
+    f.questions.forEach(q=>qs.push({id:qs.length,text:q.text,options:q.options,correct:new Set(q.correct),order:q.options.map((_,k)=>k),file:f.name}));
+    f.warnings.forEach(w=>warns.push({kind:w.kind,text:w.text,file:f.name}));
+  });
+  S.questions=qs;S.warnings=warns;
+  S.qOrder=qs.map((_,i)=>i);S.shuffles=0;S.run=null;
 }
+function clearAll(){S.files=[];rebuild();hideErr();show('upload');}
 function doShuffle(){
   S.qOrder=derange(S.qOrder);
   S.questions.forEach(q=>{q.order=derange(q.order);});
@@ -575,41 +662,42 @@ function resetExit(){
 }
 
 /* ----- upload ----- */
-function showErr(msg){const e=$('upErr');e.textContent=msg;e.hidden=false;}
-function hideErr(){$('upErr').hidden=true;}
+function showErr(msg){const e=$('v-setup').hidden?$('upErr'):$('setupErr');e.textContent=msg;e.hidden=false;}
+function hideErr(){$('upErr').hidden=true;$('setupErr').hidden=true;}
 function setBusy(b){
-  $('dropTitle').textContent=b?'Leyendo tu archivo…':'Arrastra tu archivo aquí';
-  $('btnPick').disabled=b;
+  $('dropTitle').textContent=b?'Leyendo tus archivos…':'Arrastra tus archivos aquí';
+  $('btnPick').disabled=b;$('btnAdd').disabled=b;
 }
-async function handleFile(file){
+async function handleFiles(list){
   hideErr();
-  if(!file) return;
-  if(!/\.xlsx$/i.test(file.name)){
-    showErr('Ese archivo no es un .xlsx. En Excel usa Archivo, Guardar como, Libro de Excel (.xlsx).');
-    return;
-  }
+  const files=Array.from(list||[]);
+  if(!files.length) return;
   if(typeof ExcelJS==='undefined'){
     showErr('No se pudo cargar el lector de Excel. Revisa tu conexión y recarga la página.');
     return;
   }
   setBusy(true);
-  try{
-    const buf=await file.arrayBuffer();
-    const wb=new ExcelJS.Workbook();
-    await wb.xlsx.load(buf);
-    const res=parseWorkbook(wb);
-    if(!res.questions.length) throw new Error('empty');
-    S.name=file.name;S.sheet=res.sheetName;S.sample=false;
-    adopt(res);
-    goSetup();
-  }catch(e){
-    showErr(e&&e.message==='empty'
-      ?'No encontré preguntas. Cada pregunta debe estar en la fila 1 de su columna, con las respuestas debajo.'
-      :'No pude leer el archivo. Comprueba que sea un .xlsx válido y que no tenga contraseña.');
-  }finally{
-    setBusy(false);
-    $('file').value='';
+  const problems=[];let added=0;
+  for(const file of files){
+    if(!/\.xlsx$/i.test(file.name)){problems.push(`${file.name}: no es un .xlsx.`);continue;}
+    try{
+      const wb=new ExcelJS.Workbook();
+      await wb.xlsx.load(await file.arrayBuffer());
+      const res=parseWorkbook(wb);
+      if(!res.questions.length){problems.push(`${file.name}: no encontré preguntas. Cada pregunta debe estar en la fila 1 de su columna, con las respuestas debajo.`);continue;}
+      S.files=S.files.filter(f=>f.name!==file.name);
+      S.files.push({id:++fileSeq,name:file.name,sheet:res.sheetName,include:true,questions:res.questions,warnings:res.warnings});
+      added++;
+    }catch(e){
+      problems.push(`${file.name}: no pude leerlo. Comprueba que sea un .xlsx válido y sin contraseña.`);
+    }
   }
+  setBusy(false);
+  $('file').value='';
+  if(added){
+    rebuild();goSetup();
+    if(problems.length) showErr('Se agregaron '+added+' de '+files.length+'. '+problems.join(' '));
+  }else showErr(problems.join(' '));
 }
 
 /* ----- setup ----- */
@@ -618,21 +706,30 @@ function goSetup(){
   show('setup');
 }
 function renderSetup(){
-  const qs=S.questions;
-  $('fileChips').innerHTML=S.sample
-    ?'<span class="chip">Ejemplo incluido</span>'
-    :`<span class="chip" title="${esc(S.name)}">${esc(S.name)}</span>`+(S.sheet?`<span class="chip">hoja ${esc(S.sheet)}</span>`:'');
+  $('fileList').innerHTML=S.files.map(f=>{
+    const n=f.questions.length;
+    return `<li class="file${f.include?'':' is-off'}"><label class="file-main" for="inc-${f.id}"><input type="checkbox" id="inc-${f.id}" data-inc="${f.id}"${f.include?' checked':''}><span class="box" aria-hidden="true">${ICON_CHECK}</span><span class="file-text"><span class="file-name">${esc(f.name)}</span><span class="file-sub">${n} ${n===1?'pregunta':'preguntas'}${f.sheet?' · hoja '+esc(f.sheet):''}</span></span></label><button type="button" class="btn-quiet" data-rm="${f.id}" aria-label="Quitar ${esc(f.name)}">Quitar</button></li>`;
+  }).join('');
+  const qs=S.questions,has=qs.length>0;
+  $('btnStart').disabled=!has;$('btnShuffle').disabled=!has;
+  $('peek').hidden=!has;
+  renderWarnings();
+  if(!has){
+    $('setupMeta').textContent='Marca al menos un archivo para empezar.';
+    $('shuffleStatus').innerHTML='';
+    return;
+  }
   const counts=qs.map(q=>q.options.length);
   const mn=Math.min(...counts),mx=Math.max(...counts);
-  $('setupMeta').textContent=`${qs.length} ${qs.length===1?'pregunta':'preguntas'} · `+(mn===mx?`${mn} respuestas cada una`:`de ${mn} a ${mx} respuestas`);
-  renderWarnings();
+  const nf=incl().length;
+  $('setupMeta').textContent=`${qs.length} ${qs.length===1?'pregunta':'preguntas'}`+(nf>1?` de ${nf} archivos`:'')+' · '+(mn===mx?`${mn} respuestas cada una`:`de ${mn} a ${mx} respuestas`);
   renderShuffleStatus();
 }
 function renderWarnings(){
   const box=$('warnBox'),w=S.warnings;
   if(!w.length){box.hidden=true;box.innerHTML='';return;}
   const msg=x=>{
-    const t=`«${esc(trunc(x.text,70))}»`;
+    const t=(incl().length>1?esc(x.file)+': ':'')+`«${esc(trunc(x.text,70))}»`;
     if(x.kind==='skipped') return `Se omitió ${t}: tiene menos de 2 respuestas.`;
     if(x.kind==='nokey') return `${t} no tiene respuesta verde y no cuenta en el puntaje.`;
     return `${t} tiene varias respuestas verdes: cualquiera de ellas cuenta como correcta.`;
@@ -717,7 +814,7 @@ function renderQuiz(){
   const showPrev=!instant&&run.idx>0;
 
   $('quizBody').innerHTML=`
-    <h2 id="qh" class="q" tabindex="-1">${esc(q.text)}</h2>
+    ${incl().length>1?`<p class="src">${esc(q.file)}</p>`:''}<h2 id="qh" class="q" tabindex="-1">${esc(q.text)}</h2>
     <fieldset class="sheet${locked?' is-locked':''}"><legend class="sr-only">Elige una respuesta</legend>${opts}</fieldset>
     ${banner}
     <div class="quiz-actions">
@@ -790,7 +887,7 @@ function renderResults(){
     </div>
     <div class="actions" style="margin-top:14px">
       <button type="button" class="btn-link" id="btnBackSetup">Cambiar ajustes</button>
-      <button type="button" class="btn-link" id="btnNewFile">Cargar otro Excel</button>
+      <button type="button" class="btn-link" id="btnNewFile">Empezar con otros archivos</button>
     </div>
     <section class="review" aria-labelledby="h-review">
       <div class="review-head">
@@ -802,7 +899,7 @@ function renderResults(){
   renderReview();
 }
 function renderReview(){
-  const run=S.run,only=$('onlyBad')&&$('onlyBad').checked;
+  const run=S.run,only=$('onlyBad')&&$('onlyBad').checked,multi=incl().length>1;
   const rows=[];
   run.order.forEach(i=>{
     const q=S.questions[i],c=run.answers.get(i);
@@ -814,7 +911,7 @@ function renderReview(){
     const note=c===undefined&&q.correct.size?'<p class="hint" style="margin-top:8px">No respondiste esta pregunta.</p>':'';
     rows.push(`<details class="rev"${isGood||st==='nokey'?'':' open'}>
       <summary><span class="badge ${badge[0]}">${badge[1]}</span><span class="sr-only">${badge[2]}. </span><span class="rev-q">${esc(q.text)}</span></summary>
-      <div class="rev-body"><div class="sheet">${opts}</div>${note}</div>
+      <div class="rev-body">${multi?`<p class="src">${esc(q.file)}</p>`:''}<div class="sheet">${opts}</div>${note}</div>
     </details>`);
   });
   $('revList').innerHTML=rows.length?rows.join(''):'<p class="empty">No hay preguntas falladas. Todo lo que respondiste está bien.</p>';
@@ -822,24 +919,38 @@ function renderReview(){
 
 /* ----- events ----- */
 $('btnPick').addEventListener('click',()=>$('file').click());
-$('file').addEventListener('change',e=>handleFile(e.target.files&&e.target.files[0]));
+$('file').addEventListener('change',e=>handleFiles(e.target.files));
 const drop=$('drop');
 ['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('is-over');}));
 ['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('is-over');}));
-drop.addEventListener('drop',e=>{const f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];handleFile(f);});
+drop.addEventListener('drop',e=>{handleFiles(e.dataTransfer&&e.dataTransfer.files);});
 window.addEventListener('dragover',e=>e.preventDefault());
 window.addEventListener('drop',e=>e.preventDefault());
 
 $('btnSample').addEventListener('click',()=>{
   hideErr();
-  S.name='';S.sheet='';S.sample=true;
-  adopt({questions:SAMPLE,warnings:[]});
+  S.files=[{id:++fileSeq,name:'Ejemplo incluido',sheet:'',include:true,questions:SAMPLE,warnings:[]}];
+  rebuild();
   goSetup();
 });
 
 $('btnShuffle').addEventListener('click',()=>{doShuffle();renderShuffleStatus();});
 $('v-setup').addEventListener('click',e=>{
-  if(e.target.closest('#btnRestore')){resetOrder();renderShuffleStatus();$('btnShuffle').focus();}
+  if(e.target.closest('#btnRestore')){resetOrder();renderShuffleStatus();$('btnShuffle').focus();return;}
+  if(e.target.closest('#btnAdd')){$('file').click();return;}
+  const rm=e.target.closest('[data-rm]');
+  if(rm){
+    S.files=S.files.filter(f=>f.id!==parseInt(rm.dataset.rm,10));
+    hideErr();
+    if(!S.files.length){clearAll();return;}
+    rebuild();renderSetup();
+  }
+});
+$('fileList').addEventListener('change',e=>{
+  const id=e.target.dataset&&e.target.dataset.inc;
+  if(!id) return;
+  const f=S.files.find(x=>x.id===parseInt(id,10));
+  if(f){f.include=e.target.checked;rebuild();renderSetup();}
 });
 $('modeChoices').addEventListener('change',e=>{
   if(e.target.name!=='mode') return;
@@ -849,7 +960,7 @@ $('btnStart').addEventListener('click',()=>{
   S.mode=document.querySelector('input[name=mode]:checked').value;
   startRun();
 });
-$('btnOther').addEventListener('click',()=>{hideErr();show('upload');});
+$('btnOther').addEventListener('click',clearAll);
 
 $('quizBody').addEventListener('change',e=>{
   if(e.target.name==='ans') pick(parseInt(e.target.value,10));
@@ -872,7 +983,7 @@ $('v-results').addEventListener('click',e=>{
   if(e.target.closest('#btnRedoShuffle')){doShuffle();startRun();}
   else if(e.target.closest('#btnRedoSame')){startRun();}
   else if(e.target.closest('#btnBackSetup')){renderSetup();show('setup');}
-  else if(e.target.closest('#btnNewFile')){hideErr();show('upload');}
+  else if(e.target.closest('#btnNewFile')){clearAll();}
 });
 $('v-results').addEventListener('change',e=>{
   if(e.target.id==='onlyBad') renderReview();
